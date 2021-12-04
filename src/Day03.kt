@@ -1,15 +1,12 @@
 fun main() {
     fun part1(input: List<String>): Int {
-        val gammaRate = input
-            .fold(sortedMapOf<Int, Int>()) { acc, string ->
-                string.forEachIndexed { index, c ->
-                    val onesCount = acc.getOrDefault(index, 0)
-                    if (c == '1') acc[index] = onesCount + 1
-                }
-                acc
+        val gammaRate = (0 until input.first().length)
+            .joinToString(separator = "") { index ->
+                val bitGrouping = input.groupBy { it[index] }
+                val zeros = bitGrouping.getOrDefault('0', emptyList())
+                val ones = bitGrouping.getOrDefault('1', emptyList())
+                if (ones.size >= zeros.size) "1" else "0"
             }
-            .map { if (it.value > input.size / 2) 1 else 0 }
-            .joinToString(separator = "")
 
         val decimalGammaRate = gammaRate.toInt(radix = 2)
         val epsilonRate = Integer.toBinaryString(decimalGammaRate.inv()).takeLast(input.first().length)
