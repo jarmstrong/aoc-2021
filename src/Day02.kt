@@ -1,14 +1,14 @@
-sealed class Command {
+private sealed class Command {
     data class Forward(val value: Int) : Command()
     data class Up(val value: Int) : Command()
     data class Down(val value: Int) : Command()
 }
 
-data class Position(val x: Int, val depth: Int, val aim: Int)
+private data class Position(val x: Int, val depth: Int, val aim: Int)
 
-fun Position.multiply(): Int = x * depth
+private fun Position.multiply(): Int = x * depth
 
-fun List<String>.toCommands(): List<Command> {
+private fun List<String>.toCommands(): List<Command> {
     return map {
         val commandValues = it.split(' ')
         val command = commandValues.first()
