@@ -7,18 +7,9 @@ private fun readCrabPositions(filename: String): List<Int> {
 fun calculateMinimumFuelCost(input: List<Int>, fuelCostToTarget: (Int, Int) -> Int): Int {
     val maxCrabPosition = input.maxOf { it }
 
-    val fuelCostsPerTargetPosition = mutableMapOf<Int, Int>()
-
-    (0..maxCrabPosition).forEach { targetCrabPosition ->
-        input.forEach { currentCrabPosition ->
-            val fuelCostToTargetCrabPosition = fuelCostToTarget(currentCrabPosition, targetCrabPosition)
-
-            fuelCostsPerTargetPosition[targetCrabPosition] =
-                fuelCostsPerTargetPosition.getOrDefault(targetCrabPosition, 0) + fuelCostToTargetCrabPosition
-        }
+    return (0..maxCrabPosition).minOf { targetCrabPosition ->
+        input.sumOf { currentCrabPosition -> fuelCostToTarget(currentCrabPosition, targetCrabPosition) }
     }
-
-    return fuelCostsPerTargetPosition.minOf { it.value }
 }
 
 fun main() {
